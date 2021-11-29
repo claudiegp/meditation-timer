@@ -5,11 +5,7 @@ import TimeSelector from "../TimeSelector/TimeSelector";
 const TimeContainer: FunctionComponent = () => {
   return (
     <Container>
-      {/* <form> */}
       <TimeSelector />
-      {/* <TimeSelector time="minutes"/> */}
-      {/* <TimeSelector time="seconds"/> */}
-      {/* </form> */}
     </Container>
   );
 };
