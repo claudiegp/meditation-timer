@@ -1,8 +1,7 @@
 .Box {
   border: 1px dashed grey;
-  background-color: #282c45;
+  background-color: grey;
   min-height: 25vh;
-  width: 500px;
   display: flex;
   flex-direction: column;
   align-items: center;
