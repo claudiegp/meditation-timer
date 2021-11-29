@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <TimerContainer className="Box">
+      <TimerContainer className="Timer-container">
         <Tabs />
         <TimeContainer />
         <ButtonBanner />
