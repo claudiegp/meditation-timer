@@ -1,26 +1,26 @@
 import {
-  getSecondsFromHours,
+  convertHoursToSeconds,
   calculateTotalSeconds,
-  getSecondsFromMinutes,
-  getHmsFromSeconds,
+  convertMinutesToSeconds,
+  convertSecondsToHms,
 } from "../time_utility";
 
 describe("time utilities", () => {
-  describe("getSecondsFromHours", () => {
+  describe("convertHoursToSeconds", () => {
     it("should convert 1 hour into 3600 seconds", () => {
-      expect(getSecondsFromHours(1)).toEqual(3600);
+      expect(convertHoursToSeconds(1)).toEqual(3600);
     });
     it("should convert 1.5 hours into 3600 seconds", () => {
-      expect(getSecondsFromHours(1.5)).toEqual(5400);
+      expect(convertHoursToSeconds(1.5)).toEqual(5400);
     });
   });
 
-  describe("getSecondsFromMinutes", () => {
+  describe("convertMinutesToSeconds", () => {
     it("should convert 1 minute into 60 seconds", () => {
-      expect(getSecondsFromMinutes(1)).toEqual(60);
+      expect(convertMinutesToSeconds(1)).toEqual(60);
     });
     it("should convert 60 minute into 360 seconds", () => {
-      expect(getSecondsFromMinutes(60)).toEqual(3600);
+      expect(convertMinutesToSeconds(60)).toEqual(3600);
     });
   });
   describe("calcultateTotalSeconds", () => {
@@ -33,21 +33,21 @@ describe("time utilities", () => {
     });
   });
 
-  describe("getHmsFromSeconds", () => {
+  describe("convertSecondsToHms", () => {
     it("should convert 3600 seconds into 1 hour, 0 mins, 0 secs", () => {
-      expect(getHmsFromSeconds(3600)).toEqual(
+      expect(convertSecondsToHms(3600)).toEqual(
         "1 hours + 0 minutes + 0 seconds"
       );
     });
 
     it("should convert 5430 seconds into 1 hour, 30 mins, 30 secs", () => {
-      expect(getHmsFromSeconds(5430)).toEqual(
+      expect(convertSecondsToHms(5430)).toEqual(
         "1 hours + 30 minutes + 30 seconds"
       );
     });
 
     it("should convert 3660 seconds into 1 hour, 30 mins, 30 secs", () => {
-      expect(getHmsFromSeconds(3660)).toEqual(
+      expect(convertSecondsToHms(3660)).toEqual(
         "1 hours + 1 minutes + 0 seconds"
       );
     });
