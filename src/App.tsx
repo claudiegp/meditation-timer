@@ -3,7 +3,7 @@ import "./App.css";
 import "./Timer.css";
 import { Container as TimerContainer } from "@material-ui/core";
 import { Tabs } from "./Tabs/Tabs";
-import TimePicker from "./TimePicker/TimePicker";
+import TimeContainer from "./TimeContainer/TimeContainer";
 import Header from "./Header/Header";
 import ButtonBanner from "./ButtonBanner/ButtonBanner";
 
@@ -13,7 +13,7 @@ function App() {
       <Header />
       <TimerContainer className="Box">
         <Tabs />
-        <TimePicker />
+        <TimeContainer />
         <ButtonBanner />
       </TimerContainer>
     </div>
