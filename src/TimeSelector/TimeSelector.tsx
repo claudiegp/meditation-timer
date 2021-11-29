@@ -1,23 +1,46 @@
-import { TextField, MenuItem } from "@material-ui/core";
-import React, { FunctionComponent, useState } from "react";
+import { TextField, MenuItem, Box, Container } from "@material-ui/core";
+import React, { FunctionComponent, useEffect, useState } from "react";
+import { calculateTotalSeconds } from "../Utilities/time_utility";
 
-const options = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const optionsHours: number[] = Array.from(Array(25).keys());
+const optionsMinutes: number[] = Array.from(Array(61).keys());
+const optionsSeconds: number[] = Array.from(Array(61).keys());
 
 const TimeSelector: FunctionComponent = () => {
-  const [value, setValue] = useState(undefined);
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+  const [totalSeconds, setTotalSeconds] = useState(0);
+
+  console.log(totalSeconds);
+  console.log(hours);
+  console.log(minutes);
+  console.log(seconds);
+
+  useEffect(() => {
+    setTotalSeconds(calculateTotalSeconds(hours, minutes, seconds));
+
+    console.log(totalSeconds);
+    console.log(hours);
+    console.log(minutes);
+    console.log(seconds);
+  }, [hours, minutes, seconds, totalSeconds]);
+
   return (
     <>
+      <Container>{totalSeconds} seconds</Container>
+      <br></br>
       <TextField
         id="hours"
         variant="outlined"
         defaultValue={0}
-        value={value}
+        value={hours}
         label="Hours"
-        onChange={() => setValue(value)}
+        onChange={(event) => setHours(parseInt(event.target.value))}
         select
       >
-        {options.map((option) => (
-          <MenuItem key={option} value={option}>
+        {optionsHours.map((option) => (
+          <MenuItem key={option} value={option} id="menu-item-hours">
             {option}
           </MenuItem>
         ))}
@@ -27,13 +50,13 @@ const TimeSelector: FunctionComponent = () => {
         id="minutes"
         variant="outlined"
         defaultValue={0}
-        value={value}
+        value={minutes}
         label="Minutes"
-        onChange={() => setValue(value)}
+        onChange={(event) => setMinutes(parseInt(event.target.value))}
         select
       >
-        {options.map((option) => (
-          <MenuItem key={option} value={option}>
+        {optionsMinutes.map((option) => (
+          <MenuItem key={option} value={option} id="menu-item-minutes">
             {option}
           </MenuItem>
         ))}
@@ -43,13 +66,13 @@ const TimeSelector: FunctionComponent = () => {
         id="seconds"
         variant="outlined"
         defaultValue={0}
-        value={value}
+        value={seconds}
         label="Seconds"
-        onChange={() => setValue(value)}
+        onChange={(event) => setSeconds(parseInt(event.target.value))}
         select
       >
-        {options.map((option) => (
-          <MenuItem key={option} value={option}>
+        {optionsSeconds.map((option) => (
+          <MenuItem key={option} value={option} id="menu-item-seconds">
             {option}
           </MenuItem>
         ))}
