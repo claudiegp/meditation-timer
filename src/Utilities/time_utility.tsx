@@ -20,6 +20,10 @@ export const calculateTotalSeconds = (
   return total;
 };
 
+/* 
+Converts seconds into hours, minutes and seconds.
+Then generates a string e.g. '1 hour 30 minutes 0 seconds'
+*/
 export const getHmsFromSeconds = (seconds: number): string => {
   let hours = Math.floor(seconds / 3600);
   console.log(hours);
