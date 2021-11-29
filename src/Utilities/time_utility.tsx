@@ -1,10 +1,10 @@
 export const getSecondsFromHours = (hours: number): number => {
-  const seconds = Math.floor(hours * 60 * 60);
+  const seconds: number = Math.floor(hours * 60 * 60);
   return seconds;
 };
 
 export const getSecondsFromMinutes = (minutes: number): number => {
-  const seconds = Math.floor(minutes * 60);
+  const seconds: number = Math.floor(minutes * 60);
   return seconds;
 };
 
@@ -12,11 +12,11 @@ export const calculateTotalSeconds = (
   hours: number,
   minutes: number,
   seconds: number
-) => {
-  const hoursAsSeconds = getSecondsFromHours(hours);
-  const minutesAsSeconds = getSecondsFromMinutes(minutes);
+): number => {
+  const hoursAsSeconds: number = getSecondsFromHours(hours);
+  const minutesAsSeconds: number = getSecondsFromMinutes(minutes);
 
-  const total = hoursAsSeconds + minutesAsSeconds + seconds;
+  const total: number = hoursAsSeconds + minutesAsSeconds + seconds;
   return total;
 };
 
@@ -25,12 +25,9 @@ Converts seconds into hours, minutes and seconds.
 Then generates a string e.g. '1 hour 30 minutes 0 seconds'
 */
 export const getHmsFromSeconds = (seconds: number): string => {
-  let hours = Math.floor(seconds / 3600);
-  console.log(hours);
-  let minutes = Math.floor((seconds - hours * 3600) / 60);
-  console.log(minutes);
-  let secs = seconds - hours * 3600 - minutes * 60;
-  console.log(secs);
+  const hours: number = Math.floor(seconds / 3600);
+  const minutes: number = Math.floor((seconds - hours * 3600) / 60);
+  const secs: number = seconds - hours * 3600 - minutes * 60;
 
   return `${hours} hours + ${minutes} minutes + ${secs} seconds`;
 };
