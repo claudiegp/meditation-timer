@@ -3,8 +3,14 @@ import logo from "../Assets/calm.png";
 
 const Header = () => (
   <header className="App-header">
-    <img src={logo} className="App-logo" alt="logo" datatest-id="app-logo" />
-    <p>Meditation Timer</p>
+    <img
+      src={logo}
+      className="App-logo"
+      alt="logo"
+      data-testid="app-logo"
+      id="logo"
+    />
+    <p data-testid="header-title">Meditation Timer</p>
   </header>
 );
 
