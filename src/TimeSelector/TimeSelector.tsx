@@ -6,7 +6,7 @@ import {
   convertSecondsToHms,
 } from "../Utilities/time_utility";
 
-const optionsHours: number[] = Array.from(Array(25).keys());
+const optionsHours: number[] = Array.from(Array(6).keys());
 const optionsMinutes: number[] = Array.from(Array(61).keys());
 const optionsSeconds: number[] = Array.from(Array(61).keys());
 
@@ -16,6 +16,7 @@ const TimeSelector: FunctionComponent = () => {
   const [seconds, setSeconds] = useState(0);
   const [totalSeconds, setTotalSeconds] = useState(0);
   const intervalRef: { current: NodeJS.Timeout | null } = useRef(null);
+  const [hasCountdownStarted, setHasCountdownStarted] = useState(false);
 
   const startCountdown = () => {
     if (totalSeconds > 0) {
@@ -24,6 +25,7 @@ const TimeSelector: FunctionComponent = () => {
         1000
       );
       intervalRef.current = intervalID;
+      setHasCountdownStarted(true);
       return () => clearInterval(intervalID);
     }
   };
@@ -57,6 +59,7 @@ const TimeSelector: FunctionComponent = () => {
       <br></br>
       <TextField
         id="hours"
+        data-testid="menu-items-hours"
         variant="outlined"
         defaultValue={0}
         value={hours}
@@ -64,8 +67,12 @@ const TimeSelector: FunctionComponent = () => {
         onChange={(event) => setHours(parseInt(event.target.value))}
         select
       >
-        {optionsHours.map((option) => (
-          <MenuItem key={option} value={option} id="menu-item-hours">
+        {optionsHours.map((option, id) => (
+          <MenuItem
+            key={option}
+            value={option}
+            data-testid={`menu-item-hours-${id}`}
+          >
             {option}
           </MenuItem>
         ))}
@@ -107,6 +114,7 @@ const TimeSelector: FunctionComponent = () => {
         startCountdown={startCountdown}
         pauseCountdown={pauseCountdown}
         resetCountdown={resetCountdown}
+        hasCountdownStarted={hasCountdownStarted}
       ></ButtonBanner>
     </>
   );
