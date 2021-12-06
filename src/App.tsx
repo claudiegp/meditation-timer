@@ -6,7 +6,7 @@ import { Tabs } from "./Tabs/Tabs";
 import TimeContainer from "./TimeContainer/TimeContainer";
 import Header from "./Header/Header";
 
-function App() {
+export default function App(): JSX.Element {
   return (
     <div className="App">
       <Header />
@@ -17,5 +17,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
