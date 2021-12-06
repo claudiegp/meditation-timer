@@ -1,6 +1,10 @@
-import { TextField, MenuItem, Box, Container } from "@material-ui/core";
-import React, { FunctionComponent, useEffect, useState } from "react";
-import { calculateTotalSeconds } from "../Utilities/time_utility";
+import { TextField, MenuItem, Container } from "@material-ui/core";
+import React, { FunctionComponent, useEffect, useRef, useState } from "react";
+import ButtonBanner from "../ButtonBanner/ButtonBanner";
+import {
+  calculateTotalSeconds,
+  convertSecondsToHms,
+} from "../Utilities/time_utility";
 
 const optionsHours: number[] = Array.from(Array(25).keys());
 const optionsMinutes: number[] = Array.from(Array(61).keys());
@@ -11,24 +15,45 @@ const TimeSelector: FunctionComponent = () => {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [totalSeconds, setTotalSeconds] = useState(0);
+  const intervalRef: { current: NodeJS.Timeout | null } = useRef(null);
 
-  console.log(totalSeconds);
-  console.log(hours);
-  console.log(minutes);
-  console.log(seconds);
+  const startCountdown = () => {
+    if (totalSeconds > 0) {
+      const intervalID: NodeJS.Timeout = setInterval(
+        () => setTotalSeconds((totalSeconds) => totalSeconds - 1),
+        1000
+      );
+      intervalRef.current = intervalID;
+      return () => clearInterval(intervalID);
+    }
+  };
 
+  const pauseCountdown = () => {
+    clearInterval(intervalRef.current as NodeJS.Timeout);
+  };
+
+  const resetInputValues = () => {
+    setHours(0);
+    setMinutes(0);
+    setSeconds(0);
+  };
+
+  const resetCountdown = () => {
+    clearInterval(intervalRef.current as NodeJS.Timeout);
+    setTotalSeconds(0);
+    resetInputValues();
+  };
+
+  /**
+   * sets and updates time for example '1 hours 30 minutes 0 seconds */
   useEffect(() => {
     setTotalSeconds(calculateTotalSeconds(hours, minutes, seconds));
-
-    console.log(totalSeconds);
-    console.log(hours);
-    console.log(minutes);
-    console.log(seconds);
-  }, [hours, minutes, seconds, totalSeconds]);
+  }, [hours, minutes, seconds]);
 
   return (
     <>
-      <Container>{totalSeconds} seconds</Container>
+      {/* Clock */}
+      <Container>{convertSecondsToHms(totalSeconds)}</Container>
       <br></br>
       <TextField
         id="hours"
@@ -77,6 +102,12 @@ const TimeSelector: FunctionComponent = () => {
           </MenuItem>
         ))}
       </TextField>
+
+      <ButtonBanner
+        startCountdown={startCountdown}
+        pauseCountdown={pauseCountdown}
+        resetCountdown={resetCountdown}
+      ></ButtonBanner>
     </>
   );
 };
