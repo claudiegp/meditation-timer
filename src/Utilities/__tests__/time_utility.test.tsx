@@ -53,25 +53,3 @@ describe("time utilities", () => {
     });
   });
 });
-
-/* describe("convertSecondsToHms", () => {
-    it("should convert 3600 seconds into 1 hour", () => {
-      expect(convertSecondsToHms(3600)).toEqual(1);
-    });
-
-    it("should convert 5400 seconds into 1.5 hours", () => {
-      expect(convertSecondsToHms(5400)).toEqual(1.5);
-    });
-
-    it("should convert 60 seconds into 1 minute", () => {
-      expect(convertSecondsToHms(60)).toEqual(1);
-    });
-
-    it("should convert 120 seconds into 2 minutes", () => {
-      expect(convertSecondsToHms(120)).toEqual(2);
-    });
-    it("should return 50 seconds", () => {
-      expect(convertSecondsToHms(50)).toEqual(50);
-    });
-  });
-}); */
