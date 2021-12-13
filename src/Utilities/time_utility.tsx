@@ -29,5 +29,38 @@ export const convertSecondsToHms = (seconds: number): string => {
   const minutes: number = Math.floor((seconds - hours * 3600) / 60);
   const secs: number = seconds - hours * 3600 - minutes * 60;
 
-  return `${hours} hours + ${minutes} minutes + ${secs} seconds`;
+  // question - string or a number/both?
+  const digitalHours: number | string = hours < 10 ? `0` + hours : hours;
+  const digitalMins: number | string = minutes < 10 ? `0` + minutes : minutes;
+  const digitalSeconds: number | string = secs < 10 ? `0` + secs : secs;
+
+  return `${digitalHours}:${digitalMins}:${digitalSeconds}`;
 };
+
+/* WIP refactor  */
+
+/* export const createDigitalClock = (
+  hours: number,
+  minutes: number,
+  secs: number
+): string | number => {
+  // question - string or a number/both?
+  const digitalHours: number | string = hours < 10 ? `0` + hours : hours;
+  const digitalMins: number | string = minutes < 10 ? `0` + minutes : minutes;
+  const digitalSeconds: number | string = secs < 10 ? `0` + secs : secs;
+
+  return `${digitalHours}:${digitalMins}:${digitalSeconds}`;
+};
+ */
+
+/* export const digitizeNumbers = (
+  hours: number,
+  minutes: number,
+  secs: number
+)=> {
+  // question - string or a number/both?
+  const digitalHours: number | string = hours < 10 ? `0` + hours : hours;
+  const digitalMins: number | string = minutes < 10 ? `0` + minutes : minutes;
+  const digitalSeconds: number | string = secs < 10 ? `0` + secs : secs;
+};
+ */

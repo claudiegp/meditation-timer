@@ -35,21 +35,15 @@ describe("time utilities", () => {
 
   describe("convertSecondsToHms", () => {
     it("should convert 3600 seconds into 1 hour, 0 mins, 0 secs", () => {
-      expect(convertSecondsToHms(3600)).toEqual(
-        "1 hours + 0 minutes + 0 seconds"
-      );
+      expect(convertSecondsToHms(3600)).toEqual("01:00:00");
     });
 
     it("should convert 5430 seconds into 1 hour, 30 mins, 30 secs", () => {
-      expect(convertSecondsToHms(5430)).toEqual(
-        "1 hours + 30 minutes + 30 seconds"
-      );
+      expect(convertSecondsToHms(5430)).toEqual("01:30:30");
     });
 
-    it("should convert 3660 seconds into 1 hour, 30 mins, 30 secs", () => {
-      expect(convertSecondsToHms(3660)).toEqual(
-        "1 hours + 1 minutes + 0 seconds"
-      );
+    it("should convert 3660 seconds into 1 hour, 1 mins 0 secs", () => {
+      expect(convertSecondsToHms(3660)).toEqual("01:01:00");
     });
   });
 });
