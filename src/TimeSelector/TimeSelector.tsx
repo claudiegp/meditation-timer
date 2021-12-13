@@ -3,12 +3,12 @@ import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import ButtonBanner from "../ButtonBanner/ButtonBanner";
 import {
   calculateTotalSeconds,
-  convertSecondsToHms,
+  setDigitalClock,
 } from "../Utilities/time_utility";
 
 const optionsHours: number[] = Array.from(Array(6).keys());
-const optionsMinutes: number[] = Array.from(Array(61).keys());
-const optionsSeconds: number[] = Array.from(Array(61).keys());
+const optionsMinutes: number[] = Array.from(Array(60).keys());
+const optionsSeconds: number[] = Array.from(Array(60).keys());
 
 const TimeSelector: FunctionComponent = () => {
   const [hours, setHours] = useState(0);
@@ -42,12 +42,14 @@ const TimeSelector: FunctionComponent = () => {
 
   const resetCountdown = () => {
     clearInterval(intervalRef.current as NodeJS.Timeout);
+    setHasCountdownStarted(false);
+
     setTotalSeconds(0);
     resetInputValues();
   };
 
   /**
-   * sets and updates time for example '1 hours 30 minutes 0 seconds */
+   * sets and updates time */
   useEffect(() => {
     setTotalSeconds(calculateTotalSeconds(hours, minutes, seconds));
   }, [hours, minutes, seconds]);
@@ -55,7 +57,7 @@ const TimeSelector: FunctionComponent = () => {
   return (
     <>
       {/* Clock */}
-      <Container>{convertSecondsToHms(totalSeconds)}</Container>
+      <Container>{setDigitalClock(totalSeconds)}</Container>
       <br></br>
       <TextField
         id="hours"
