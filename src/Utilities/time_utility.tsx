@@ -22,45 +22,37 @@ export const calculateTotalSeconds = (
 
 /**  
 Converts seconds into hours, minutes and seconds.
-Then generates a string e.g. '1 hour 30 minutes 0 seconds'
 */
-export const convertSecondsToHms = (seconds: number): string => {
-  const hours: number = Math.floor(seconds / 3600);
-  const minutes: number = Math.floor((seconds - hours * 3600) / 60);
-  const secs: number = seconds - hours * 3600 - minutes * 60;
+export const setDigitalClock = (seconds: number): string => {
+  const { h, m, s } = convertSecondsToHms(seconds);
 
-  // question - string or a number/both?
-  const digitalHours: number | string = hours < 10 ? `0` + hours : hours;
-  const digitalMins: number | string = minutes < 10 ? `0` + minutes : minutes;
-  const digitalSeconds: number | string = secs < 10 ? `0` + secs : secs;
-
-  return `${digitalHours}:${digitalMins}:${digitalSeconds}`;
-};
-
-/* WIP refactor  */
-
-/* export const createDigitalClock = (
-  hours: number,
-  minutes: number,
-  secs: number
-): string | number => {
-  // question - string or a number/both?
-  const digitalHours: number | string = hours < 10 ? `0` + hours : hours;
-  const digitalMins: number | string = minutes < 10 ? `0` + minutes : minutes;
-  const digitalSeconds: number | string = secs < 10 ? `0` + secs : secs;
+  const { digitalHours, digitalMins, digitalSeconds } = convertHmsToDigitalTime(
+    h,
+    m,
+    s
+  );
 
   return `${digitalHours}:${digitalMins}:${digitalSeconds}`;
 };
- */
 
-/* export const digitizeNumbers = (
+export const convertSecondsToHms = (
+  seconds: number
+): { h: number; m: number; s: number } => {
+  const h: number = Math.floor(seconds / 3600);
+  const m: number = Math.floor((seconds - h * 3600) / 60);
+  const s: number = seconds - h * 3600 - m * 60;
+
+  return { h, m, s };
+};
+
+export const convertHmsToDigitalTime = (
   hours: number,
   minutes: number,
   secs: number
-)=> {
-  // question - string or a number/both?
-  const digitalHours: number | string = hours < 10 ? `0` + hours : hours;
-  const digitalMins: number | string = minutes < 10 ? `0` + minutes : minutes;
-  const digitalSeconds: number | string = secs < 10 ? `0` + secs : secs;
+): { digitalHours: string; digitalMins: string; digitalSeconds: string } => {
+  const digitalHours: string = hours < 10 ? `0` + hours : `${hours}`;
+  const digitalMins: string = minutes < 10 ? `0` + minutes : `${minutes}`;
+  const digitalSeconds: string = secs < 10 ? `0` + secs : `${secs}`;
+
+  return { digitalHours, digitalMins, digitalSeconds };
 };
- */
