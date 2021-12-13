@@ -1,22 +1,21 @@
-import { TextField, MenuItem, Container } from "@material-ui/core";
+import { TextField, MenuItem } from "@material-ui/core";
 import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import ButtonBanner from "../ButtonBanner/ButtonBanner";
-import {
-  calculateTotalSeconds,
-  setDigitalClock,
-} from "../Utilities/time_utility";
+import { Clock } from "../Clock/Clock";
+import { calculateTotalSeconds } from "../Utilities/time_utility";
 
 const optionsHours: number[] = Array.from(Array(6).keys());
 const optionsMinutes: number[] = Array.from(Array(60).keys());
 const optionsSeconds: number[] = Array.from(Array(60).keys());
 
 const TimeSelector: FunctionComponent = () => {
-  const [hours, setHours] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
-  const [totalSeconds, setTotalSeconds] = useState(0);
+  const [hours, setHours] = useState<number>(0);
+  const [minutes, setMinutes] = useState<number>(0);
+  const [seconds, setSeconds] = useState<number>(0);
+  const [totalSeconds, setTotalSeconds] = useState<number>(0);
   const intervalRef: { current: NodeJS.Timeout | null } = useRef(null);
-  const [hasCountdownStarted, setHasCountdownStarted] = useState(false);
+  const [hasCountdownStarted, setHasCountdownStarted] =
+    useState<boolean>(false);
 
   const startCountdown = () => {
     if (totalSeconds > 0) {
@@ -48,16 +47,14 @@ const TimeSelector: FunctionComponent = () => {
     resetInputValues();
   };
 
-  /**
-   * sets and updates time */
+  /* sets and updates time */
   useEffect(() => {
     setTotalSeconds(calculateTotalSeconds(hours, minutes, seconds));
   }, [hours, minutes, seconds]);
 
   return (
     <>
-      {/* Clock */}
-      <Container>{setDigitalClock(totalSeconds)}</Container>
+      <Clock totalSeconds={totalSeconds} />
       <br></br>
       <TextField
         id="hours"
