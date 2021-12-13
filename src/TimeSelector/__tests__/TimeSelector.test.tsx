@@ -20,9 +20,19 @@ describe("TimeSelector", () => {
       expect(button).toBeInTheDocument();
     });
 
-    it("should render a pause button", () => {
-      const button = screen.getByText(/pause/i);
-      expect(button).toBeInTheDocument();
+    it("should render a pause button when user clicks `start`", () => {
+      const startButton = screen.getByTestId("start-button");
+      userEvent.click(startButton);
+      const pauseButton = screen.getByTestId("pause-button");
+      expect(pauseButton).toBeInTheDocument();
+    });
+
+    // TODO
+    it("should render a start button when user clicks `reset`", () => {
+      const resetButton = screen.getByText(/reset/i);
+      userEvent.click(resetButton);
+      const startButton = screen.getByText(/start/i);
+      expect(startButton).toBeInTheDocument();
     });
   });
 
@@ -37,6 +47,7 @@ describe("TimeSelector", () => {
     });
   });
 
+  // question - how to test this
   describe("clicking `start` button", () => {
     it("should start countdown", () => {
       const startButton = screen.getByText(/start/i);
