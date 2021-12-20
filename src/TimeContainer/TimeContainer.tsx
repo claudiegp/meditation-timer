@@ -8,15 +8,7 @@ interface TimeContainerProps {
 const TimeContainer: FunctionComponent<TimeContainerProps> = ({
   clockType,
 }) => {
-  if (clockType === "timer") {
-    return <TimeSelector clockType={clockType} />;
-  }
-
-  if (clockType === "stopwatch") {
-    return <TimeSelector clockType={clockType} />;
-  }
-
-  return <>Select a clock type</>;
+  return <TimeSelector clockType={clockType} />;
 };
 
 export default TimeContainer;
