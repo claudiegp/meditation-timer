@@ -1,6 +1,5 @@
-import { Button, ButtonGroup, Container } from "@material-ui/core";
 import React, { FunctionComponent } from "react";
-
+import { Button, ButtonGroup, Container } from "@mui/material";
 interface ButtonBannerProps {
   startCountdown: () => void;
   pauseCounter: () => void;

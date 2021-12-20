@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from "react";
-
-import { Tab, Tabs as TabGroup } from "@material-ui/core";
+import { Tab, Tabs as TabGroup } from "@mui/material";
 
 interface TabsProps {
   clockType: string;
@@ -14,9 +13,16 @@ export const Tabs: FunctionComponent<TabsProps> = ({ clockType, onChange }) => {
       value={clockType}
       onChange={onChange}
       centered
+      indicatorColor="primary"
+      aria-label="tabs with options"
     >
-      <Tab id="Timer" label="Timer" value="timer" />
-      <Tab id="Stopwatch" label="Stopwatch" value="stopwatch" />
+      <Tab id="Timer" label="Timer" value="timer" aria-label="tab for timer" />
+      <Tab
+        id="Stopwatch"
+        label="Stopwatch"
+        value="stopwatch"
+        aria-label="tab for stopwatch"
+      />
     </TabGroup>
   );
 };

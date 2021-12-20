@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import React from "react";
 import logo from "../Assets/calm.png";
 
@@ -10,7 +11,15 @@ const Header = () => (
       data-testid="app-logo"
       id="logo"
     />
-    <p data-testid="header-title">Meditation Timer</p>
+    <Typography
+      variant="h5"
+      gutterBottom
+      component="div"
+      color={"black"}
+      data-testid="header-title"
+    >
+      Meditation Timer
+    </Typography>
   </header>
 );
 

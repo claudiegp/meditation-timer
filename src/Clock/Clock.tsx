@@ -1,4 +1,4 @@
-import { Container, Typography } from "@material-ui/core";
+import { Container, Typography } from "@mui/material";
 import React, { FunctionComponent } from "react";
 import { setDigitalClock } from "../Utilities/time_utility";
 
@@ -9,7 +9,7 @@ interface ClockProps {
 export const Clock: FunctionComponent<ClockProps> = ({ totalSeconds }) => {
   return (
     <Container>
-      <Typography variant="h3" gutterBottom component="div">
+      <Typography variant="h3" gutterBottom component="div" color={"black"}>
         {setDigitalClock(totalSeconds)}
       </Typography>
     </Container>
