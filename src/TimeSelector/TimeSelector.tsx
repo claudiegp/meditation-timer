@@ -8,29 +8,47 @@ const optionsHours: number[] = Array.from(Array(6).keys());
 const optionsMinutes: number[] = Array.from(Array(60).keys());
 const optionsSeconds: number[] = Array.from(Array(60).keys());
 
-const TimeSelector: FunctionComponent = () => {
+interface TimeSelectorProps {
+  clockType: string;
+}
+
+const TimeSelector: FunctionComponent<TimeSelectorProps> = ({ clockType }) => {
   const [hours, setHours] = useState<number>(0);
   const [minutes, setMinutes] = useState<number>(0);
   const [seconds, setSeconds] = useState<number>(0);
   const [totalSeconds, setTotalSeconds] = useState<number>(0);
+
   const intervalRef: { current: NodeJS.Timeout | null } = useRef(null);
-  const [hasCountdownStarted, setHasCountdownStarted] =
-    useState<boolean>(false);
+  const [hasCounterStarted, setHasCounterStarted] = useState<boolean>(false);
+  const [hasCounterPaused, setHasCounterPaused] = useState<boolean>(false);
 
   const startCountdown = () => {
-    if (totalSeconds > 0) {
+    if (clockType === "timer" && totalSeconds > 0) {
       const intervalID: NodeJS.Timeout = setInterval(
-        () => setTotalSeconds((totalSeconds) => totalSeconds - 1),
+        () => setTotalSeconds((totalSeconds: number) => totalSeconds - 1),
         1000
       );
       intervalRef.current = intervalID;
-      setHasCountdownStarted(true);
+      setHasCounterStarted(true);
+      setHasCounterPaused(false);
+
       return () => clearInterval(intervalID);
     }
   };
 
-  const pauseCountdown = () => {
+  const startCountup = () => {
+    const intervalID: NodeJS.Timeout = setInterval(
+      () => setTotalSeconds((totalSeconds: number) => totalSeconds + 1),
+      1000
+    );
+    intervalRef.current = intervalID;
+    setHasCounterStarted(true);
+    return () => clearInterval(intervalID);
+  };
+
+  const pauseCounter = () => {
     clearInterval(intervalRef.current as NodeJS.Timeout);
+    setHasCounterPaused(true);
   };
 
   const resetInputValues = () => {
@@ -39,9 +57,9 @@ const TimeSelector: FunctionComponent = () => {
     setSeconds(0);
   };
 
-  const resetCountdown = () => {
+  const resetCounter = () => {
     clearInterval(intervalRef.current as NodeJS.Timeout);
-    setHasCountdownStarted(false);
+    setHasCounterStarted(false);
 
     setTotalSeconds(0);
     resetInputValues();
@@ -56,65 +74,85 @@ const TimeSelector: FunctionComponent = () => {
     <>
       <Clock totalSeconds={totalSeconds} />
       <br></br>
-      <TextField
-        id="hours"
-        data-testid="menu-items-hours"
-        variant="outlined"
-        defaultValue={0}
-        value={hours}
-        label="Hours"
-        onChange={(event) => setHours(parseInt(event.target.value))}
-        select
-      >
-        {optionsHours.map((option, id) => (
-          <MenuItem
-            key={option}
-            value={option}
-            data-testid={`menu-item-hours-${id}`}
+
+      {clockType === "timer" && (
+        <>
+          <TextField
+            id="hours"
+            data-testid="menu-items-hours"
+            variant="outlined"
+            defaultValue={0}
+            value={hours}
+            label="Hours"
+            onChange={(event) => setHours(parseInt(event.target.value))}
+            select
           >
-            {option}
-          </MenuItem>
-        ))}
-      </TextField>
+            {optionsHours.map((option, id) => (
+              <MenuItem
+                key={option}
+                value={option}
+                data-testid={`menu-item-hours-${id}`}
+              >
+                {option}
+              </MenuItem>
+            ))}
+          </TextField>
 
-      <TextField
-        id="minutes"
-        variant="outlined"
-        defaultValue={0}
-        value={minutes}
-        label="Minutes"
-        onChange={(event) => setMinutes(parseInt(event.target.value))}
-        select
-      >
-        {optionsMinutes.map((option) => (
-          <MenuItem key={option} value={option} id="menu-item-minutes">
-            {option}
-          </MenuItem>
-        ))}
-      </TextField>
+          <TextField
+            id="minutes"
+            data-testid="menu-items-minutes"
+            variant="outlined"
+            defaultValue={0}
+            value={minutes}
+            label="Minutes"
+            onChange={(event) => setMinutes(parseInt(event.target.value))}
+            select
+          >
+            {optionsMinutes.map((option) => (
+              <MenuItem key={option} value={option} id="menu-item-minutes">
+                {option}
+              </MenuItem>
+            ))}
+          </TextField>
 
-      <TextField
-        id="seconds"
-        variant="outlined"
-        defaultValue={0}
-        value={seconds}
-        label="Seconds"
-        onChange={(event) => setSeconds(parseInt(event.target.value))}
-        select
-      >
-        {optionsSeconds.map((option) => (
-          <MenuItem key={option} value={option} id="menu-item-seconds">
-            {option}
-          </MenuItem>
-        ))}
-      </TextField>
+          <TextField
+            id="seconds"
+            data-testid="menu-items-seconds"
+            variant="outlined"
+            defaultValue={0}
+            value={seconds}
+            label="Seconds"
+            onChange={(event) => setSeconds(parseInt(event.target.value))}
+            select
+          >
+            {optionsSeconds.map((option) => (
+              <MenuItem key={option} value={option} id="menu-item-seconds">
+                {option}
+              </MenuItem>
+            ))}
+          </TextField>
+        </>
+      )}
 
-      <ButtonBanner
-        startCountdown={startCountdown}
-        pauseCountdown={pauseCountdown}
-        resetCountdown={resetCountdown}
-        hasCountdownStarted={hasCountdownStarted}
-      ></ButtonBanner>
+      {clockType === "timer" && (
+        <ButtonBanner
+          startCountdown={startCountdown}
+          pauseCounter={pauseCounter}
+          resetCounter={resetCounter}
+          hasCounterStarted={hasCounterStarted}
+          hasCounterPaused={hasCounterPaused}
+        ></ButtonBanner>
+      )}
+
+      {clockType === "stopwatch" && (
+        <ButtonBanner
+          startCountdown={startCountup}
+          pauseCounter={pauseCounter}
+          resetCounter={resetCounter}
+          hasCounterStarted={hasCounterStarted}
+          hasCounterPaused={hasCounterPaused}
+        ></ButtonBanner>
+      )}
     </>
   );
 };
