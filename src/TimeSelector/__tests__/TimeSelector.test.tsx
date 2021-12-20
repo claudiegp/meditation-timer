@@ -105,4 +105,10 @@ describe("TimeSelector when clockType is `stopwatch`", () => {
       expect(inputField).toBeInTheDocument();
     });
   });
+
+  describe("functionality", () => {
+    test("should stop timer when clock reaches 59 hours 59 seconds (3599 seconds) ", () => {
+      // todo
+    });
+  });
 });

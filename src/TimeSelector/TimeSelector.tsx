@@ -1,4 +1,5 @@
 import { TextField, MenuItem } from "@material-ui/core";
+// todo update to use MUI
 import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import ButtonBanner from "../ButtonBanner/ButtonBanner";
 import { Clock } from "../Clock/Clock";
@@ -43,6 +44,11 @@ const TimeSelector: FunctionComponent<TimeSelectorProps> = ({ clockType }) => {
     );
     intervalRef.current = intervalID;
     setHasCounterStarted(true);
+
+    if (totalSeconds === 3599) {
+      pauseCounter();
+    }
+
     return () => clearInterval(intervalID);
   };
 
@@ -80,12 +86,13 @@ const TimeSelector: FunctionComponent<TimeSelectorProps> = ({ clockType }) => {
           <TextField
             id="hours"
             data-testid="menu-items-hours"
-            variant="outlined"
+            variant="filled"
             defaultValue={0}
             value={hours}
             label="Hours"
             onChange={(event) => setHours(parseInt(event.target.value))}
             select
+            color={"primary"}
           >
             {optionsHours.map((option, id) => (
               <MenuItem
@@ -101,7 +108,7 @@ const TimeSelector: FunctionComponent<TimeSelectorProps> = ({ clockType }) => {
           <TextField
             id="minutes"
             data-testid="menu-items-minutes"
-            variant="outlined"
+            variant="filled"
             defaultValue={0}
             value={minutes}
             label="Minutes"
@@ -118,7 +125,7 @@ const TimeSelector: FunctionComponent<TimeSelectorProps> = ({ clockType }) => {
           <TextField
             id="seconds"
             data-testid="menu-items-seconds"
-            variant="outlined"
+            variant="filled"
             defaultValue={0}
             value={seconds}
             label="Seconds"
