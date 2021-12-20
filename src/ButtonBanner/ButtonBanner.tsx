@@ -3,28 +3,33 @@ import React, { FunctionComponent } from "react";
 
 interface ButtonBannerProps {
   startCountdown: () => void;
-  pauseCountdown: () => void;
-  resetCountdown: () => void;
-  hasCountdownStarted: boolean;
+  pauseCounter: () => void;
+  resetCounter: () => void;
+  hasCounterStarted: boolean;
+  hasCounterPaused: boolean;
 }
 
 const ButtonBanner: FunctionComponent<ButtonBannerProps> = ({
-  resetCountdown,
-  pauseCountdown,
+  resetCounter,
+  pauseCounter,
   startCountdown,
-  hasCountdownStarted,
+  hasCounterStarted,
+  hasCounterPaused,
 }) => (
   <Container>
     <ButtonGroup variant="contained" aria-label="outlined primary button group">
-      <Button onClick={resetCountdown} data-testid="reset-button">
+      <Button onClick={resetCounter} data-testid="reset-button">
         Reset
       </Button>
-      {hasCountdownStarted && (
-        <Button onClick={pauseCountdown} data-testid="pause-button">
+      {hasCounterStarted && (
+        <Button
+          onClick={hasCounterPaused ? startCountdown : pauseCounter}
+          data-testid="pause-button"
+        >
           Pause
         </Button>
       )}
-      {!hasCountdownStarted && (
+      {!hasCounterStarted && (
         <Button onClick={startCountdown} data-testid="start-button">
           Start
         </Button>
