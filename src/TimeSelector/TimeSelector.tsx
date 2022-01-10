@@ -1,5 +1,4 @@
-import { TextField, MenuItem } from "@material-ui/core";
-// todo update to use MUI
+import { TextField, MenuItem } from "@mui/material";
 import React, { FunctionComponent } from "react";
 
 const optionsHours: number[] = Array.from(Array(6).keys());
@@ -27,7 +26,7 @@ const TimeSelector: FunctionComponent<TimeSelectorProps> = ({
     <>
       <TextField
         id="hours"
-        data-testid="menu-items-hours"
+        data-testid="textfield-hours"
         variant="filled"
         defaultValue={0}
         value={hours}
@@ -37,11 +36,7 @@ const TimeSelector: FunctionComponent<TimeSelectorProps> = ({
         color={"primary"}
       >
         {optionsHours.map((option, id) => (
-          <MenuItem
-            key={option}
-            value={option}
-            data-testid={`menu-item-hours-${id}`}
-          >
+          <MenuItem key={option} value={option}>
             {option}
           </MenuItem>
         ))}
@@ -49,7 +44,7 @@ const TimeSelector: FunctionComponent<TimeSelectorProps> = ({
 
       <TextField
         id="minutes"
-        data-testid="menu-items-minutes"
+        data-testid="textfield-minutes"
         variant="filled"
         defaultValue={0}
         value={minutes}
@@ -58,7 +53,7 @@ const TimeSelector: FunctionComponent<TimeSelectorProps> = ({
         select
       >
         {optionsMinutes.map((option) => (
-          <MenuItem key={option} value={option} id="menu-item-minutes">
+          <MenuItem key={option} value={option}>
             {option}
           </MenuItem>
         ))}
@@ -66,7 +61,7 @@ const TimeSelector: FunctionComponent<TimeSelectorProps> = ({
 
       <TextField
         id="seconds"
-        data-testid="menu-items-seconds"
+        data-testid="textfield-seconds"
         variant="filled"
         defaultValue={0}
         value={seconds}
@@ -75,7 +70,7 @@ const TimeSelector: FunctionComponent<TimeSelectorProps> = ({
         select
       >
         {optionsSeconds.map((option) => (
-          <MenuItem key={option} value={option} id="menu-item-seconds">
+          <MenuItem key={option} value={option}>
             {option}
           </MenuItem>
         ))}
