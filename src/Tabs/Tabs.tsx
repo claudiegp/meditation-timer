@@ -16,12 +16,19 @@ export const Tabs: FunctionComponent<TabsProps> = ({ clockType, onChange }) => {
       indicatorColor="primary"
       aria-label="tabs with options"
     >
-      <Tab id="Timer" label="Timer" value="timer" aria-label="tab for timer" />
+      <Tab
+        id="Timer"
+        label="Timer"
+        value="timer"
+        aria-label="tab for timer"
+        data-testid="timer-tab"
+      />
       <Tab
         id="Stopwatch"
         label="Stopwatch"
         value="stopwatch"
         aria-label="tab for stopwatch"
+        data-testid="stopwatch-tab"
       />
     </TabGroup>
   );
