@@ -43,20 +43,22 @@ export default function App(): JSX.Element {
         1000
       );
       intervalRef.current = intervalID;
-      setHasCounterStarted(true);
       setHasCounterPaused(false);
+      setHasCounterStarted(true);
 
       return () => clearInterval(intervalID);
     }
   };
 
   const startCountup = () => {
+    console.log("startCountup");
     const intervalID: NodeJS.Timeout = setInterval(
       () => setTotalSeconds((totalSeconds: number) => totalSeconds + 1),
       1000
     );
     intervalRef.current = intervalID;
     setHasCounterStarted(true);
+    setHasCounterPaused(false);
 
     if (totalSeconds === 3599) {
       pauseCounter();
@@ -67,8 +69,11 @@ export default function App(): JSX.Element {
 
   const pauseCounter = () => {
     clearInterval(intervalRef.current as NodeJS.Timeout);
+    setHasCounterStarted(false);
     setHasCounterPaused(true);
+    console.log("pauseCounter");
   };
+
   const resetInputValues = () => {
     setHours(0);
     setMinutes(0);
@@ -81,6 +86,8 @@ export default function App(): JSX.Element {
 
     setTotalSeconds(0);
     resetInputValues();
+
+    console.log("resetCounter");
   };
 
   const handleTabChange = (event: any, clockType: string) => {
@@ -109,7 +116,7 @@ export default function App(): JSX.Element {
 
         {clockType === "timer" && (
           <ButtonBanner
-            startCountdown={startCountdown}
+            startCounter={startCountdown}
             pauseCounter={pauseCounter}
             resetCounter={resetCounter}
             hasCounterStarted={hasCounterStarted}
@@ -118,7 +125,7 @@ export default function App(): JSX.Element {
         )}
         {clockType === "stopwatch" && (
           <ButtonBanner
-            startCountdown={startCountup}
+            startCounter={startCountup}
             pauseCounter={pauseCounter}
             resetCounter={resetCounter}
             hasCounterStarted={hasCounterStarted}

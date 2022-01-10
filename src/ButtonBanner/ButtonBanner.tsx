@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
-import { Button, ButtonGroup, Container } from "@mui/material";
+import { Button, ButtonGroup } from "@mui/material";
 interface ButtonBannerProps {
-  startCountdown: () => void;
+  startCounter: () => void;
   pauseCounter: () => void;
   resetCounter: () => void;
   hasCounterStarted: boolean;
@@ -11,30 +11,32 @@ interface ButtonBannerProps {
 const ButtonBanner: FunctionComponent<ButtonBannerProps> = ({
   resetCounter,
   pauseCounter,
-  startCountdown,
+  startCounter,
   hasCounterStarted,
   hasCounterPaused,
-}) => (
-  <Container>
+}) => {
+  console.log({ hasCounterStarted, hasCounterPaused });
+
+  return (
     <ButtonGroup variant="contained" aria-label="outlined primary button group">
       <Button onClick={resetCounter} data-testid="reset-button">
         Reset
       </Button>
       {hasCounterStarted && (
         <Button
-          onClick={hasCounterPaused ? startCountdown : pauseCounter}
+          onClick={hasCounterPaused ? startCounter : pauseCounter}
           data-testid="pause-button"
         >
           Pause
         </Button>
       )}
       {!hasCounterStarted && (
-        <Button onClick={startCountdown} data-testid="start-button">
+        <Button onClick={startCounter} data-testid="start-button">
           Start
         </Button>
       )}
     </ButtonGroup>
-  </Container>
-);
+  );
+};
 
 export default ButtonBanner;
