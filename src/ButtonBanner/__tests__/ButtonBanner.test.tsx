@@ -4,16 +4,15 @@ import ButtonBanner from "../ButtonBanner";
 
 const resetCounter = jest.fn();
 const pauseCounter = jest.fn();
-const startCountdownOrCountup = jest.fn();
+const startCounter = jest.fn();
 
 const counterHasStarted = () => {
   render(
     <ButtonBanner
-      startCounter={startCountdownOrCountup}
+      startCounter={startCounter}
       resetCounter={resetCounter}
       pauseCounter={pauseCounter}
-      hasCounterStarted={true}
-      hasCounterPaused={false}
+      isCounting={true}
     />
   );
 };
@@ -21,11 +20,10 @@ const counterHasStarted = () => {
 const counterHasNotStarted = () => {
   render(
     <ButtonBanner
-      startCounter={jest.fn()}
-      resetCounter={jest.fn()}
-      pauseCounter={jest.fn()}
-      hasCounterStarted={false}
-      hasCounterPaused={false}
+      startCounter={startCounter}
+      resetCounter={resetCounter}
+      pauseCounter={pauseCounter}
+      isCounting={false}
     />
   );
 };
@@ -33,11 +31,10 @@ const counterHasNotStarted = () => {
 const counterHasBeenPaused = () => {
   render(
     <ButtonBanner
-      startCounter={jest.fn()}
-      resetCounter={jest.fn()}
-      pauseCounter={jest.fn()}
-      hasCounterStarted={false}
-      hasCounterPaused={true}
+      startCounter={startCounter}
+      resetCounter={resetCounter}
+      pauseCounter={pauseCounter}
+      isCounting={false}
     />
   );
 };
@@ -57,36 +54,38 @@ describe("<ButtonBanner />", () => {
   });
 
   describe("when counter has started", () => {
-    it("should display `Pause` button", () => {
+    test("should display `Pause` button", () => {
       counterHasStarted();
-      const pauseText = screen.getByText(/pause/i);
+      const pauseText = screen.getByTestId("pause-button");
       expect(pauseText).toBeInTheDocument();
     });
+
     test("should call pauseCounter() on click", () => {
       counterHasStarted();
-      const pauseText = screen.getByText(/pause/i);
-      userEvent.click(pauseText);
+      const pauseButton = screen.getByTestId("pause-button");
+      userEvent.click(pauseButton);
       expect(pauseCounter).toHaveBeenCalled();
     });
   });
 
-  describe("when counter has NOT started", () => {
-    it("should display `Start` button when counter begins and `hasCounterStarted` is true", () => {
+  describe("start button", () => {
+    it("should display `Start` button", () => {
       counterHasNotStarted();
       const startText = screen.getByText(/start/i);
       expect(startText).toBeInTheDocument();
     });
 
-    /* WIP - FAILING */
-    test("should not call startCountdown() on click if time has not been selected", () => {
+    test("user can start", () => {
       counterHasNotStarted();
-      const startText = screen.getByTestId("start-button");
-      userEvent.click(startText);
-      expect(startCountdownOrCountup).not.toHaveBeenCalled();
+      const startButton = screen.getByTestId("start-button");
+
+      userEvent.click(startButton);
+      expect(startCounter).toHaveBeenCalled();
+      expect(startCounter).toHaveBeenCalledTimes(1);
     });
   });
 
-  describe("when counter has been reset", () => {
+  describe("reset button", () => {
     test("should call resetCounter() on click", () => {
       counterHasStarted();
       const resetText = screen.getByText(/reset/i);
@@ -95,56 +94,21 @@ describe("<ButtonBanner />", () => {
     });
   });
 
-  describe("when counter has been paused", () => {
-    describe("rendering", () => {
-      test("should render 'start' text in button when `hasCounterPaused` is true", () => {
-        counterHasBeenPaused();
-        // todo
-        const startText = screen.getByText(/start/i);
-        expect(startText).toBeInTheDocument();
-      });
+  describe("pause button", () => {
+    test("should render 'start' text in button", () => {
+      counterHasBeenPaused();
+      const startText = screen.getByText(/start/i);
+      expect(startText).toBeInTheDocument();
     });
 
-    // when user presses pause, user should be able to press `start`
-    // user can pause and start counter
+    test("clicking 'start' should start counter", () => {
+      counterHasBeenPaused();
+      const startButton = screen.getByTestId("start-button");
+      expect(startButton).toBeInTheDocument();
 
-    describe("pause functionality", () => {
-      test("user can pause", () => {
-        counterHasStarted();
-        const pauseButton = screen.getByTestId("pause-button");
-
-        userEvent.click(pauseButton);
-        expect(pauseCounter).toHaveBeenCalled();
-        expect(pauseCounter).toHaveBeenCalledTimes(1);
-      });
-
-      // FAILING
-      test("clicking 'start' should call startCountdown()", () => {
-        counterHasBeenPaused();
-        const startButton = screen.getByTestId("start-button");
-
-        userEvent.click(startButton);
-        expect(startCountdownOrCountup).toHaveBeenCalled();
-        expect(startCountdownOrCountup).toHaveBeenCalledTimes(1);
-      });
-
-      test("clicking 'start' and then 'pause' should call pauseCountdown()", () => {
-        counterHasBeenPaused();
-        const startButton = screen.getByTestId("start-button");
-        const pauseButton = screen.getByTestId("pause-button");
-
-        userEvent.click(startButton);
-        expect(startCountdownOrCountup).toHaveBeenCalled();
-        expect(startCountdownOrCountup).toHaveBeenCalledTimes(1);
-
-        userEvent.click(pauseButton);
-        expect(pauseCounter).toHaveBeenCalled();
-      });
-
-      test("clicking 'start' should continue counter from where it was paused at", () => {
-        counterHasBeenPaused();
-        // todo
-      });
+      userEvent.click(startButton);
+      expect(startCounter).toHaveBeenCalled();
+      expect(startCounter).toHaveBeenCalledTimes(1);
     });
   });
 });

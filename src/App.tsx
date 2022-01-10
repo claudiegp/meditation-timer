@@ -15,9 +15,8 @@ export default function App(): JSX.Element {
   const [seconds, setSeconds] = useState<number>(0);
   const [clockType, setClockType] = useState("timer");
   const [totalSeconds, setTotalSeconds] = useState<number>(0);
-  const [hasCounterStarted, setHasCounterStarted] = useState<boolean>(false);
+  const [isCounting, setIsCounting] = useState<boolean>(false);
   const intervalRef: { current: NodeJS.Timeout | null } = useRef(null);
-  const [hasCounterPaused, setHasCounterPaused] = useState<boolean>(false);
 
   /* sets and updates time */
   useEffect(() => {
@@ -43,8 +42,7 @@ export default function App(): JSX.Element {
         1000
       );
       intervalRef.current = intervalID;
-      setHasCounterPaused(false);
-      setHasCounterStarted(true);
+      setIsCounting(true);
 
       return () => clearInterval(intervalID);
     }
@@ -57,8 +55,7 @@ export default function App(): JSX.Element {
       1000
     );
     intervalRef.current = intervalID;
-    setHasCounterStarted(true);
-    setHasCounterPaused(false);
+    setIsCounting(true);
 
     if (totalSeconds === 3599) {
       pauseCounter();
@@ -69,8 +66,7 @@ export default function App(): JSX.Element {
 
   const pauseCounter = () => {
     clearInterval(intervalRef.current as NodeJS.Timeout);
-    setHasCounterStarted(false);
-    setHasCounterPaused(true);
+    setIsCounting(false);
     console.log("pauseCounter");
   };
 
@@ -82,7 +78,7 @@ export default function App(): JSX.Element {
 
   const resetCounter = () => {
     clearInterval(intervalRef.current as NodeJS.Timeout);
-    setHasCounterStarted(false);
+    setIsCounting(false);
 
     setTotalSeconds(0);
     resetInputValues();
@@ -119,8 +115,7 @@ export default function App(): JSX.Element {
             startCounter={startCountdown}
             pauseCounter={pauseCounter}
             resetCounter={resetCounter}
-            hasCounterStarted={hasCounterStarted}
-            hasCounterPaused={hasCounterPaused}
+            isCounting={isCounting}
           ></ButtonBanner>
         )}
         {clockType === "stopwatch" && (
@@ -128,8 +123,7 @@ export default function App(): JSX.Element {
             startCounter={startCountup}
             pauseCounter={pauseCounter}
             resetCounter={resetCounter}
-            hasCounterStarted={hasCounterStarted}
-            hasCounterPaused={hasCounterPaused}
+            isCounting={isCounting}
           ></ButtonBanner>
         )}
       </Container>
