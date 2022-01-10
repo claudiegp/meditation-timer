@@ -92,7 +92,7 @@ export default function App(): JSX.Element {
   };
 
   return (
-    <div className="App">
+    <main className="App">
       <Header />
       <Container>
         <Tabs clockType={clockType} onChange={handleTabChange} />
@@ -127,6 +127,6 @@ export default function App(): JSX.Element {
           ></ButtonBanner>
         )}
       </Container>
-    </div>
+    </main>
   );
 }
